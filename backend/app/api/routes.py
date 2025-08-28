@@ -1,20 +1,23 @@
-from fastapi import APIRouter
-from pydantic import BaseModel
+from fastapi import APIRouter, UploadFile, File, HTTPException
+from app.models.email import EmailRequest, ClassificationResponse
+from app.services.classifier import classify_email_text
+from app.utils.helpers import read_txt_file, read_pdf_file
 
-router = APIRouter()
+router = APIRouter(tags=["Classifier"])
 
-class EmailRequest(BaseModel):
-    email_text: str
+@router.post("/classify", response_model=ClassificationResponse)
+async def classify(req: EmailRequest):
+    result = classify_email_text(subject=req.subject, body=req.body)
+    return result
 
-@router.post("/classify")
-async def classify_email(request: EmailRequest):
-    text = request.email_text.lower()
-    # Classificação simples
-    if "feliz" in text or "obrigado" in text:
-        category = "Improdutivo"
-        suggested_reply = "Sem ação necessária."
+@router.post("/classify-file", response_model=ClassificationResponse)
+async def classify_file(file: UploadFile = File(...)):
+    filename = (file.filename or "").lower()
+    if filename.endswith(".txt"):
+        text = await read_txt_file(file)
+    elif filename.endswith(".pdf"):
+        text = await read_pdf_file(file)
     else:
-        category = "Produtivo"
-        suggested_reply = "Responder solicitando detalhes adicionais."
-
-    return {"category": category, "suggested_reply": suggested_reply}
+        raise HTTPException(status_code=400, detail="Formato não suportado. Envie .txt ou .pdf")
+    result = classify_email_text(subject="", body=text)
+    return result
