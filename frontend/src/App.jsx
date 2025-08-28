@@ -1,8 +1,9 @@
-import EmailForm from "./components/EmailForm/EmailForm";
+import EmailForm from "./components/EmailForm/index";
+import "./index.css";
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+    <div>
       <EmailForm />
     </div>
   );
