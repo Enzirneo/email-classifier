@@ -1,0 +1,20 @@
+/* ---------- RESPOSTA ---------- */
+.chat-response {
+  margin-top: 20px;
+  background: #2a2a2a;
+  padding: 16px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 600px;
+}
+
+.response-category {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+.response-text {
+  color: #ccc;
+  font-size: 14px;
+}

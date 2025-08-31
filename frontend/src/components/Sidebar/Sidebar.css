@@ -1,0 +1,137 @@
+/* ---------- SIDEBAR ---------- */
+.sidebar {
+  background: #2e2e2e;
+  width: 220px;               
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  transition: width 0.2s ease; /* animação só da largura */
+}
+
+.sidebar.collapsed {
+  width: 50px;                
+}
+
+/* Nav interna */
+.sidebar nav {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Botões */
+.sidebar button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; 
+  gap: 12px;
+  background: #444;
+  border: none;
+  color: white;
+  width: 100%;                 
+  height: 50px;                
+  padding: 0 16px;             
+  border-radius: 12px;         
+  cursor: pointer;
+  text-align: left;
+  overflow: hidden;
+  transition: background 0.2s, padding 0.2s;
+  position: relative;
+}
+
+.sidebar button:hover {
+  background: #666;
+}
+
+/* Botão ativo */
+.sidebar button.active {
+  background: #888;
+  font-weight: bold;
+}
+
+/* Ícones */
+.sidebar button .icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+/* Texto dos botões */
+.sidebar button .text {
+  white-space: nowrap;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+  overflow: hidden;
+}
+
+/* ---------- VERSÃO COLAPSADA DOS BOTÕES ---------- */
+.sidebar.collapsed button {
+  width: 50px;               /* largura quadrada */
+  height: 50px;              /* altura igual à largura */
+  justify-content: center;   /* centraliza horizontalmente o conteúdo */
+  align-items: center;       /* centraliza verticalmente */
+  padding: 0;                
+  border-radius: 12px;       /* mantém cantos arredondados */
+}
+
+.sidebar.collapsed button .icon {
+  font-size: 20px;      /* exemplo: aumentar ou diminuir */
+  margin-left: 10px;            /* remove qualquer margem */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sidebar.collapsed button .text {
+  opacity: 0;                
+  pointer-events: none;
+}
+
+/* ---------- BOTÕES FIXOS DO TOPO ---------- */
+.top-buttons {
+  display: flex;
+  justify-content: space-between; /* um botão à esquerda e outro à direita */
+  align-items: center;
+  gap: 120px; /* espaçamento mínimo entre eles, se necessário */
+  margin-bottom: 10px;
+}
+
+/* Toggle fixo */
+.toggle-btn {
+  background: #555;
+  border: none;
+  color: white;
+  font-size: 18px;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.toggle-btn:hover {
+  background: #777;
+}
+
+/* Botão de EmailForm */
+.email-btn {
+  background: #555;
+  border: none;
+  color: white;
+  font-size: 18px;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+/* Oculta o botão de EmailForm quando a sidebar está colapsada */
+.sidebar.collapsed .email-btn {
+  display: none;
+}
+
+.email-btn:hover {
+  background: #777;
+}

@@ -1,47 +1,91 @@
-.chat-container {
-  width: 5S00px;
-  background-color: #1a1a1a;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-  color: #fff;
+/* ---------- FORM ---------- */
+.email-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 600px;
 }
 
-.chat-form textarea {
+/* Row para input + botão */
+.input-row {
+  display: flex;
+  gap: 8px;
   width: 100%;
-  padding: 10px;
-  border-radius: 8px;
+  align-items: center; /* alinha verticalmente */
+}
+
+/* Caixa de input */
+.input-wrapper {
+  flex: 1;
+  background: #2a2a2a;
+  border-radius: 30px;
+  padding: 0; /* removido padding automático */
+  display: flex;
+  align-items: center;
+  position: relative; /* necessário para placeholder absoluto */
+}
+
+/* Textarea */
+.input-wrapper textarea {
+  width: 100%;
+  background: transparent;
   border: none;
-  margin-bottom: 10px;
   resize: none;
-  min-height: 80px;
-  font-size: 0.95em;
+  padding: 10px 12px 0px 15px; /* padding-top controla posição do texto */
+  color: white;
+  font-size: 14px;
+  min-height: 28px;
+  max-height: 200px;
+  overflow-y: hidden;
+  line-height: 1.4;
+  box-sizing: border-box;
+  margin-top: 0px;
+  position: relative;
 }
 
-.chat-form input[type="file"] {
-  margin-bottom: 10px;
+.input-wrapper textarea:focus {
+  outline: none;
 }
 
-.chat-form button {
-  width: 100%;
-  background-color: #646cff;
+/* Placeholder alinhado manualmente */
+.input-wrapper textarea::placeholder {
+  color: #aaa;
+  position: absolute;
+  top: 12px;    /* ajusta manualmente a altura do placeholder */
+  left: 15px;  /* distância da borda esquerda */
+  pointer-events: none;
+}
+
+/* Botão de enviar ao lado da textarea */
+.send-btn {
+  width: 40px;
+  height: 40px;
+  padding-left: 13px;
+  border-radius: 50%;
+  font-size: 17px;
+  background: #888;
   border: none;
-  color: #fff;
-  font-weight: bold;
+  color: black;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
-.chat-response {
-  margin-top: 20px;
-  background-color: #2a2a2a;
-  padding: 15px;
-  border-radius: 10px;
+.send-btn:hover {
+  background: #aaa;
 }
 
-.response-category {
-  font-weight: bold;
-  margin-bottom: 5px;
+/* Upload de arquivos */
+.file-upload {
+  background: #444;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
 }
 
-.response-text {
-  white-space: pre-wrap;
+.file-upload:hover {
+  background: #666;
 }

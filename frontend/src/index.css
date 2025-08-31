@@ -15,9 +15,6 @@ html, body, #root {
   height: 100%;
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center; /* centraliza horizontal */
-  align-items: center;     /* centraliza vertical */
 }
 
 a {
