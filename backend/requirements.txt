@@ -1,10 +1,6 @@
 fastapi
-uvicorn[standard]
+uvicorn
 pydantic
-nltk
-pdfminer.six
+transformers
+torch
 python-multipart
-# --- opcionais, se quiser IA externa ---
-# transformers
-# torch
-# openai
