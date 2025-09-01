@@ -55,3 +55,85 @@
   margin-top: 20px;
   box-sizing: border-box;
 }
+
+/* Overlay do modal */
+.email-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* escurece o fundo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Conteúdo do modal */
+.email-modal {
+  background: #2c2c2c; /* mantém padrão dos cards */
+  padding: 30px 25px;
+  border-radius: 14px;
+  max-width: 800px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Títulos e textos internos do modal */
+.email-modal h2 {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.email-modal p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #e0e0e0;
+}
+
+.email-modal strong {
+  color: #fff;
+}
+
+/* Botão de fechar modal */
+.modal-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 36px;   /* largura igual à altura */
+  height: 36px;  /* altura igual à largura */
+  background: #c62828; /* vermelho */
+  border: none;
+  border-radius: 50%;   /* círculo perfeito */
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;          /* remove padding interno */
+  line-height: 1;       /* garante que o X fique centralizado verticalmente */
+  transition: background 0.2s;
+}
+
+.modal-close-btn:hover {
+  background: #e53935; /* leve destaque ao passar o mouse */
+}
+
+
+
+/* Animação de fadeIn */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
