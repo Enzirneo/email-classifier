@@ -3,6 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.routes import router as api_router
 from app.services.nlp import ensure_nlp_resources
 
+# -------------------------------
+# LISTA GLOBAL PARA HISTÓRICO DE EMAILS
+emails_history = []
+# -------------------------------
+
 app = FastAPI(title="Email Classifier API", version="1.0.0")
 
 # CORS (ajuste a origem do seu frontend em produção)

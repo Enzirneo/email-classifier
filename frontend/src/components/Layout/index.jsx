@@ -2,15 +2,15 @@ import { useState } from "react";
 import Sidebar from "../Sidebar";
 import EmailForm from "../EmailForm";
 import ChatResponse from "../ChatResponse";
+import EmailHistory from "../EmailHistory";
 import "./Layout.css";
 
 export default function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [response, setResponse] = useState(null);
 
-  // Novo estado para "página atual"
   const [currentPage, setCurrentPage] = useState("novoEmail"); 
-  // valores possíveis: "novoEmail", "produtivos", "improdutivos", "respondidos"
+  const [emails, setEmails] = useState([]);
 
   const handleEmailSubmit = async ({ emailText, file }) => {
     const formData = new FormData();
@@ -25,6 +25,15 @@ export default function Layout() {
       });
       const data = await res.json();
       setResponse(data);
+
+      const newEmail = {
+        subject: "",
+        body: emailText,
+        category: data.category,
+        timestamp: new Date().toLocaleString(),
+      };
+      setEmails(prev => [newEmail, ...prev]);
+      
     } catch (err) {
       console.error("Erro ao conectar com o backend:", err);
     }
@@ -36,7 +45,7 @@ export default function Layout() {
         sidebarOpen={sidebarOpen}
         toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
         currentPage={currentPage}
-        setCurrentPage={setCurrentPage} // passa para sidebar controlar
+        setCurrentPage={setCurrentPage}
       />
 
       <main className="main-content">
@@ -48,9 +57,9 @@ export default function Layout() {
           </>
         )}
 
-        {currentPage === "produtivos" && <h1>📈 Emails Produtivos</h1>}
-        {currentPage === "improdutivos" && <h1>🛑 Emails Improdutivos</h1>}
-        {currentPage === "respondidos" && <h1>📬 Emails Respondidos</h1>}
+        {currentPage === "history" && (
+          <EmailHistory emails={emails} />
+        )}
       </main>
     </div>
   );

@@ -8,9 +8,8 @@ export default function Sidebar({ sidebarOpen, toggleSidebar, currentPage, setCu
         {/* Botão de EmailForm */}
         <button 
           className="email-btn" 
-          onClick={() => setCurrentPage("novoEmail")}
-        >
-          📨
+          onClick={() => setCurrentPage("novoEmail")}>
+          <span>📨</span>
         </button>
 
         {/* Botão de toggle */}
@@ -22,25 +21,11 @@ export default function Sidebar({ sidebarOpen, toggleSidebar, currentPage, setCu
       {/* Navegação */}
       <nav>
         <button 
-          className={currentPage === "produtivos" ? "active" : ""} 
-          onClick={() => setCurrentPage("produtivos")}
+          className={currentPage === "history" ? "active" : ""} 
+          onClick={() => setCurrentPage("history")}
         >
-          <span className="icon">✅</span>
-          <span className="text">Produtivos</span>
-        </button>
-        <button 
-          className={currentPage === "improdutivos" ? "active" : ""} 
-          onClick={() => setCurrentPage("improdutivos")}
-        >
-          <span className="icon">❌</span>
-          <span className="text">Improdutivos</span>
-        </button>
-        <button 
-          className={currentPage === "respondidos" ? "active" : ""} 
-          onClick={() => setCurrentPage("respondidos")}
-        >
-          <span className="icon">📬</span>
-          <span className="text">Respondidos</span>
+          <span className="icon">📜</span>
+          <span className="text">Histórico</span>
         </button>
       </nav>
     </aside>

@@ -119,12 +119,25 @@
   background: #555;
   border: none;
   color: white;
-  font-size: 18px;
+  font-size: 20px; /* pode ajustar o tamanho do emoji */
   width: 40px;
   height: 40px;
   border-radius: 12px;
   cursor: pointer;
   transition: background 0.2s;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;  /* importante para emoji não "saltar" */
+}
+
+.email-btn span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-5px, -4px);
 }
 
 /* Oculta o botão de EmailForm quando a sidebar está colapsada */
