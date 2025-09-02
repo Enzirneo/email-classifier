@@ -8,8 +8,16 @@ export default function EmailForm({ onSubmit }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Cria o objeto do email incluindo arquivo e link temporário
+    const emailData = {
+      emailText,
+      file,
+      fileName: file ? file.name : null,
+      fileUrl: file ? URL.createObjectURL(file) : null, // link temporário
+    };
+
     // Chama o onSubmit do Layout
-    await onSubmit({ emailText, file });
+    await onSubmit(emailData);
 
     // Limpa os campos
     setEmailText("");
@@ -24,16 +32,14 @@ export default function EmailForm({ onSubmit }) {
             value={emailText}
             onChange={(e) => {
               setEmailText(e.target.value);
-              e.target.style.height = "auto"; // reseta a altura antes de ajustar
+              e.target.style.height = "auto"; // reseta altura antes de ajustar
               e.target.style.height = e.target.scrollHeight + "px"; // ajusta à altura do conteúdo
             }}
             placeholder="Digite ou cole o email aqui..."
             ref={(el) => {
-              // Garante altura mínima quando o componente é renderizado ou limpo
-              if (el && emailText === "") el.style.height = "44px"; // altura mínima, ajuste conforme quiser
+              if (el && emailText === "") el.style.height = "44px"; // altura mínima
             }}
           />
-
         </div>
         <button type="submit" className="send-btn">➤</button>
       </div>

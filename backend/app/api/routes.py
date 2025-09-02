@@ -3,12 +3,14 @@ from app.models.email import EmailRequest, ClassificationResponse
 from app.services.classifier import classify_email_text
 from app.utils.helpers import read_txt_file, read_pdf_file
 from app.storage import add_email, get_all_emails
+from datetime import datetime
 
 router = APIRouter(tags=["Classifier"])
 
 @router.post("/classify", response_model=ClassificationResponse)
 async def classify(req: EmailRequest):
     result = classify_email_text(req.subject, req.body)
+    timestamp = datetime.utcnow().isoformat()
 
     add_email({
         "subject": req.subject,
@@ -17,10 +19,21 @@ async def classify(req: EmailRequest):
         "confidence": result["confidence"],
         "suggested_reply": result["suggested_reply"],
         "provider": result["provider"],
-        "responded": False
+        "responded": False,
+        "timestamp": timestamp,
+        "fileName": None
     })
 
-    return result
+    return {
+        "subject": req.subject,
+        "body": req.body,
+        "category": result["category"],
+        "confidence": result["confidence"],
+        "suggested_reply": result["suggested_reply"],
+        "provider": result["provider"],
+        "fileName": None,
+        "timestamp": timestamp
+    }
 
 @router.post("/classify-file", response_model=ClassificationResponse)
 async def classify_file(file: UploadFile = File(...)):
@@ -33,6 +46,7 @@ async def classify_file(file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail="Formato não suportado. Envie .txt ou .pdf")
 
     result = classify_email_text("", text)
+    timestamp = datetime.utcnow().isoformat()
 
     add_email({
         "subject": "",
@@ -41,10 +55,22 @@ async def classify_file(file: UploadFile = File(...)):
         "confidence": result["confidence"],
         "suggested_reply": result["suggested_reply"],
         "provider": result["provider"],
-        "responded": False
+        "responded": False,
+        "timestamp": timestamp,
+        "fileName": file.filename
     })
 
-    return result
+    # Retorna todos os dados para o frontend
+    return {
+        "subject": "",
+        "body": text,
+        "category": result["category"],
+        "confidence": result["confidence"],
+        "suggested_reply": result["suggested_reply"],
+        "provider": result["provider"],
+        "fileName": file.filename,
+        "timestamp": timestamp
+    }
 
 @router.get("/emails-history")
 def emails_history():

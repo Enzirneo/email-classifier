@@ -2,11 +2,14 @@ import json
 from transformers import pipeline
 from app.core.config import settings
 
-# Inicializa pipeline HF com token
+# Se o token estiver vazio ou None, não passa use_auth_token
+token_arg = settings.HF_TOKEN if settings.HF_TOKEN else None
+
+# Inicializa pipeline HF
 classifier_pipeline = pipeline(
     "zero-shot-classification",
     model=settings.HF_MODEL,
-    use_auth_token=settings.HF_TOKEN
+    use_auth_token=token_arg
 )
 
 def classify_email_with_hf(email_text: str):

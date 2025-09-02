@@ -8,35 +8,44 @@ import "./Layout.css";
 export default function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [response, setResponse] = useState(null);
-
   const [currentPage, setCurrentPage] = useState("novoEmail"); 
   const [emails, setEmails] = useState([]);
 
   const handleEmailSubmit = async ({ emailText, file }) => {
-    const formData = new FormData();
-    if (file) formData.append("file", file);
-    else formData.append("email_text", emailText);
+    let classificationData = null;
 
-    try {
-      const res = await fetch("http://localhost:8000/api/classify", {
-        method: "POST",
-        body: file ? formData : JSON.stringify({ subject: "", body: emailText }),
-        headers: file ? {} : { "Content-Type": "application/json" },
-      });
-      const data = await res.json();
-      setResponse(data);
-
-      const newEmail = {
-        subject: "",
-        body: emailText,
-        category: data.category,
-        timestamp: new Date().toLocaleString(),
-      };
-      setEmails(prev => [newEmail, ...prev]);
-      
-    } catch (err) {
-      console.error("Erro ao conectar com o backend:", err);
+    // Sempre envia o texto para o backend
+    if (emailText) {
+      try {
+        const res = await fetch("http://localhost:8000/api/classify", {
+          method: "POST",
+          body: JSON.stringify({ subject: "", body: emailText }),
+          headers: { "Content-Type": "application/json" },
+        });
+        const data = await res.json();
+        setResponse(data);
+        classificationData = data;
+      } catch (err) {
+        console.error("Erro ao conectar com o backend:", err);
+      }
     }
+
+    // Adiciona o email ao estado
+    setEmails(prev => [
+      {
+        subject: classificationData?.subject || "",
+        body: emailText,
+        category: classificationData?.category || "",
+        confidence: classificationData?.confidence || null,
+        suggested_reply: classificationData?.suggested_reply || "",
+        provider: classificationData?.provider || "",
+        timestamp: new Date().toLocaleString(),
+        file,
+        fileName: file?.name || null,
+        fileUrl: file ? URL.createObjectURL(file) : null,
+      },
+      ...prev
+    ]);
   };
 
   return (

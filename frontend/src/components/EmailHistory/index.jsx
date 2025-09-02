@@ -8,7 +8,7 @@ export default function EmailHistory({ emails }) {
 
   const filteredEmails = emails.filter(email => {
     if (filter === "todos") return true;
-    return email.category.toLowerCase() === filter;
+    return email.category?.toLowerCase() === filter;
   });
 
   return (
@@ -43,19 +43,27 @@ export default function EmailHistory({ emails }) {
           <div className="email-modal" onClick={e => e.stopPropagation()}>
             <button className="modal-close-btn" onClick={() => setModalEmail(null)}>×</button>
             <h2>{modalEmail.subject || "Sem assunto"}</h2>
-            <p><strong>Categoria:</strong> {modalEmail.category}</p>
+            <p><strong>Categoria:</strong> {modalEmail.category || "Sem categoria"}</p>
             <p><strong>Corpo do Email:</strong></p>
-            <p>{modalEmail.body}</p>
+            <p>{modalEmail.body || modalEmail.emailText}</p>
+
             {modalEmail.response && (
               <>
                 <p><strong>Resposta sugerida:</strong></p>
                 <p>{modalEmail.response}</p>
               </>
             )}
-            {modalEmail.fileName && (
-              <p><strong>Anexo:</strong> {modalEmail.fileName}</p>
+
+            {modalEmail.fileName && modalEmail.fileUrl && (
+              <p>
+                <strong>Anexo:</strong>{" "}
+                <a href={modalEmail.fileUrl} download={modalEmail.fileName}>
+                  {modalEmail.fileName}
+                </a>
+              </p>
             )}
-            <p><strong>Data:</strong> {modalEmail.date}</p>
+
+            <p><strong>Data:</strong> {modalEmail.timestamp}</p>
           </div>
         </div>
       )}
